@@ -6,6 +6,7 @@ import Image from 'next/image'
 
 import { useHash } from "@/hooks/useHash";
 import { ExcelInput } from "@/components/ExcelInput";
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 export default function Home() {
   const [ excelFile, setExcelFile ] = useState<File | undefined>();
@@ -23,8 +24,8 @@ export default function Home() {
   }
 
   return (
-    <div>
-      <h1>main</h1>
+    <div className="flex flex-col items-center">
+      <ConnectButton/>
       <ExcelInput setExcelFile={setExcelFile} setExcelFileName={setExcelFileName}/>
       <input type="text" placeholder="address" value={targetAdminAddr} onChange={(e) => setTargetAdminAddr(e.target.value)}/>
       <button onClick={checkHashMatch}>確認</button>
