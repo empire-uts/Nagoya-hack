@@ -13,6 +13,7 @@ export const useHash = async(str:string) => {
 
   const hashBuffer = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
   const hexHash = hexString(hashBuffer);
+  console.log(hexHash);
 
   return hexHash;
 }

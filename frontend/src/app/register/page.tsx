@@ -1,11 +1,15 @@
 "use client"
 
+import { ethers } from "ethers";
 import { useState } from "react";
+
 import { useHash } from "@/hooks/useHash";
 import { ExcelInput } from "@/components/ExcelInput";
 import { useReadExcel } from "@/hooks/useReadExcel";
+import { useAccountContext } from "@/context/AccountProvider";
 
 export default function page() {
+  const { currentAccount, connectWallet } = useAccountContext();
   const [ excelFile, setExcelFile ] = useState<File>();
   const [ excelDataHash, setExcelDataHash ] = useState("");
   const [ excelFileName, setExcelFileName ] = useState<string>("");
@@ -17,6 +21,18 @@ export default function page() {
       setExcelDataHash(_excelDataHash);
       
       const excelFileNameHash = await useHash(excelFileName);
+
+      const { ethereum } = window;
+      if(!ethereum){
+        return;
+      }
+      const provider = new ethers.providers.Web3Provider(ethereum);
+      const signer = provider.getSigner();
+      const contract = new ethers.Contract(
+        "contract abi",
+        "contact address",
+        signer
+      )
     }
   }
 
