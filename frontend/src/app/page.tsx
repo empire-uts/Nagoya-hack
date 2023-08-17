@@ -49,8 +49,8 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center">
       <ExcelInput setExcelFile={setExcelFile} setExcelFileName={setExcelFileName}/>
-      <input type="text" placeholder="address" value={targetAdminAddr} onChange={(e) => setTargetAdminAddr(e.target.value)}/>
-      <button onClick={checkHashMatch}>確認</button>
+      <input className="mt-6 p-2 text-zinc-500 bg-zinc-100 rounded-lg outline-none" type="text" placeholder="address" value={targetAdminAddr} onChange={(e) => setTargetAdminAddr(e.target.value)}/>
+      <button className="mt-16 p-3 text-white bg-zinc-900 rounded-lg hover:opacity-80 duration-200" onClick={checkHashMatch}>Check Excel Data</button>
     </div>
   )
 }

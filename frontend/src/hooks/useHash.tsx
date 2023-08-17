@@ -1,5 +1,3 @@
-import { ethers } from "ethers";
-
 // string to SHA-256 hash
 export const useHash = async(str:string) => {
   const hexString = (buffer) => {

@@ -8,10 +8,8 @@ import contractAbi from "@/utils/contractAbi.json";
 import { useHash } from "@/hooks/useHash";
 import { ExcelInput } from "@/components/ExcelInput";
 import { useReadExcel } from "@/hooks/useReadExcel";
-import { useAccountContext } from "@/context/AccountProvider";
 
 export default function page() {
-  const { currentAccount, connectWallet } = useAccountContext();
   const [ excelFile, setExcelFile ] = useState<File>();
   const [ excelNameHash, setExcelNameHash ] = useState<Uint8Array>(new Uint8Array());
   const [ excelFileName, setExcelFileName ] = useState<string>("");
@@ -42,10 +40,9 @@ export default function page() {
   }
 
   return (
-    <div>
-      <h1>register</h1>
+    <div className="flex flex-col items-center">
       <ExcelInput setExcelFile={setExcelFile} setExcelFileName={setExcelFileName}/>
-      <button onClick={registerExcelData}>登録</button>
+      <button className="mt-16 p-3 text-white bg-zinc-900 rounded-lg hover:opacity-80 duration-200" onClick={registerExcelData}>Register Excel Data</button>
     </div>
   )
 }
