@@ -20,6 +20,8 @@ export default function Page() {
   const [ excelFile, setExcelFile ] = useState<File>();
   const [ excelNameHash, setExcelNameHash ] = useState<Uint8Array>(new Uint8Array());
   const [ excelFileName, setExcelFileName ] = useState<string>("");
+  const [ targetAdminAddr, setTargetAdminAddr ] = useState("");
+  const [ isAddress, setIsAddress ] = useState(true);
   const [ isLoding, setIsLoding ] = useState<boolean>(false);
 
   useEffect(() => {
@@ -28,10 +30,17 @@ export default function Page() {
 
   const registerExcelData = async() => {
     if(excelFile){
+      if(!ethers.utils.isAddress(targetAdminAddr)){
+        console.log("存在しないアドレス");
+        setIsAddress(false);
+        return;
+      }
+
       const excelDataJson = await readExcel(excelFile);
       const excelDataHash = await createHash(excelDataJson);
       
       const _excelNameHash = await createHash(excelFileName);
+      setExcelNameHash(_excelNameHash);
       
       const { ethereum } = window;
       if(!ethereum){
@@ -48,10 +57,16 @@ export default function Page() {
           signer
         )
 
-        const txn = await contract.addFile(_excelNameHash, excelDataHash);
+        const isApploved = await contract.isApproved(targetAdminAddr, _excelNameHash);
+        if(!isApploved){
+          console.log('is apploved: ', isApploved);
+          alert("編集権限がありません");
+          return;
+        }
+
+        const txn = await contract.addFile(_excelNameHash, excelDataHash, targetAdminAddr);
         setIsLoding(true);
         await txn.wait();
-        setExcelNameHash(_excelNameHash);
         setIsLoding(false);
       }catch(error){
         setIsLoding(false);
@@ -63,6 +78,15 @@ export default function Page() {
     <div className="flex flex-col max-w-4xl mx-auto items-center">
      <IsConnectWallet>
       <ExcelInput setExcelFile={setExcelFile} setExcelFileName={setExcelFileName}/>
+      <input
+        className="mt-6 px-4 py-2 border border-gray200 text-zinc-500 rounded-xl"
+        placeholder="address.."
+        value={targetAdminAddr}
+        onChange={(e) => setTargetAdminAddr(e.target.value)}
+      />
+      {(!isAddress)&& (
+        <p className="text-sm text-red-500">存在しないアドレス</p>
+      )}
       <button className="mt-16 p-3 text-white bg-zinc-900 rounded-lg hover:opacity-80 duration-200" onClick={registerExcelData}>Register Excel Data</button>
       <FileAddressDisplay excelFileName={excelFileName} adminAddress={currentAccount}/>
       {isLoding && (
