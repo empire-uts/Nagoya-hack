@@ -15,6 +15,6 @@ export const ExcelInput:FC<Props> = ({ setExcelFile, setExcelFileName }) => {
   }
 
   return(
-    <input className="mt-16" type="file" accept=".xlsx" onChange={onChangeFile}/>
+    <input className="mt-16 ml-12 text-sm cursor-pointer hover:opacity-80 file:p-3 file:border-none file:rounded-lg file:text-white file:bg-zinc-900" type="file" accept=".xlsx" onChange={onChangeFile}/>
   )
 }
