@@ -35,6 +35,7 @@ export default function Page() {
       
       const { ethereum } = window;
       if(!ethereum){
+        alert("Please insall Metamask");
         return;
       }
 

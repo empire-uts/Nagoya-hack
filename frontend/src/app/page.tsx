@@ -43,6 +43,7 @@ export default function Home() {
 
       const { ethereum } = window;
     if(!ethereum){
+      alert("Please insall Metamask");
       return;
     }
     const provider = new ethers.providers.Web3Provider(ethereum);
