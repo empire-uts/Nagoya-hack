@@ -1,6 +1,6 @@
 // string to SHA-256 hash
-export const useHash = async(str:string) => {
-  const hexString = (buffer) => {
+export const createHash = async(str:string) => {
+  const hexString = (buffer:any) => {
     const byteArray = new Uint8Array(buffer);
     // const hexCodes:string[] = [...byteArray].map(value => {
     //   const hexCode:string = value.toString(16);

@@ -1,6 +1,6 @@
 import ExeclJS from "exceljs";
 
-export const useReadExcel = async(file:File):Promise<string> => {
+export const readExcel = async(file:File):Promise<string> => {
   const data = await file.arrayBuffer();
 
   const workbook = new ExeclJS.Workbook();

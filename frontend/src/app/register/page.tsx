@@ -5,16 +5,16 @@ import { useEffect, useState } from "react";
 
 import { CONTRACT_ADDRESS } from "@/utils/Contents";
 import contractAbi from "@/utils/contractAbi.json";
-import { useHash } from "@/hooks/useHash";
+import { createHash } from "@/utils/createHash";
 import { ExcelInput } from "@/components/features/ExcelInput";
-import { useReadExcel } from "@/hooks/useReadExcel";
+import { readExcel } from "@/utils/readExcel";
 import Spinner from "@/components/ui/Spinner";
 import { useAccountContext } from "@/context/AccountProvider";
 import { FileAddressDisplay } from "@/components/features/FileAddressDisplay";
 import { usePageContext } from "@/context/PageProvider";
 import { IsConnectWallet } from "@/components/features/IsConnextWallet";
 
-export default function page() {
+export default function Page() {
   const { setNowPage }  =usePageContext();
   const { currentAccount, connectWallet } = useAccountContext();
   const [ excelFile, setExcelFile ] = useState<File>();
@@ -28,10 +28,10 @@ export default function page() {
 
   const registerExcelData = async() => {
     if(excelFile){
-      const excelDataJson = await useReadExcel(excelFile);
-      const excelDataHash = await useHash(excelDataJson);
+      const excelDataJson = await readExcel(excelFile);
+      const excelDataHash = await createHash(excelDataJson);
       
-      const _excelNameHash = await useHash(excelFileName);
+      const _excelNameHash = await createHash(excelFileName);
       
       const { ethereum } = window;
       if(!ethereum){
