@@ -23,7 +23,7 @@ const main = async () => {
     const fileContentHashDummy = ethers.utils.formatBytes32String('exampleFileContentDummy');
 
     //add file
-    await contract.addFile(fileNameHash, fileContentHash, file_owner.address);
+    await contract.addFile(fileNameHash, fileContentHash, file_owner.address, owner);
     console.log('File added to registry.');
 
     // getFileVersion
@@ -31,14 +31,36 @@ const main = async () => {
     let retV2 = retV.toNumber();
     console.log('Fetched file version:', retV2);
     
+    //get file history
+    let retFileHis = await contract.getFileHistory(owner, fileNameHash);
+    console.log("File History: ", retFileHis);
+
+    //ファイル承認
+    await contract.setApproverFlg(owner, fileNameHash);
+    console.log('File added to registry.');
+    
+    //get file history
+    retFileHis = await contract.getFileHistory(owner, fileNameHash);
+    console.log("File History: ", retFileHis);
+
+
     //set approval
     await contract.setApproval(randomPerson1.address, fileNameHash, true);
     console.log('Approval added.');
 
 
-    await contract.addFile(fileNameHash, fileContentHashDummy, file_owner.address);
+    await contract.addFile(fileNameHash, fileContentHashDummy, file_owner.address, owner);
     console.log('File added to registry.');
 
+    retFileHis = await contract.getFileHistory(owner, fileNameHash);
+    console.log("File History: ", retFileHis);
+
+    //ファイル承認
+    await contract.setApproverFlg(owner, fileNameHash);
+    console.log('aaaaaaaaaaaaaaaaaaaa File added to registry.');
+    
+    retFileHis = await contract.getFileHistory(owner, fileNameHash);
+    console.log("File History: ", retFileHis);
 
     //get file version
     retV = await contract.getFileVersion(owner, fileNameHash);
@@ -46,7 +68,7 @@ const main = async () => {
     console.log('Fetched file version:', retV2);
 
     //get file history
-    let retFileHis = await contract.getFileHistory(owner, fileNameHash);
+    retFileHis = await contract.getFileHistory(owner, fileNameHash);
     console.log("File History: ", retFileHis);
 
     //get approval list
