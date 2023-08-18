@@ -53,7 +53,7 @@ export default function Page(){
           contractAbi.abi,
           signer
         )
-        
+        setIsLoding(true);
         const txn = await contract.setApproval(
           permissionGrantingAddr,
           _excelNameHash,

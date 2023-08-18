@@ -70,6 +70,7 @@ export default function Page() {
         setIsLoding(false);
       }catch(error){
         setIsLoding(false);
+        console.log(error);
       }
     }
   }

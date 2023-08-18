@@ -40,6 +40,8 @@ export default function Home() {
       const excelDataJson = await readExcel(excelFile);
       const excelDataHash = await createHash(excelDataJson);
       const excelFileNameHash = await createHash(excelFileName);
+      console.log(excelDataHash);
+      console.log(excelFileNameHash)
 
       const { ethereum } = window;
     if(!ethereum){
