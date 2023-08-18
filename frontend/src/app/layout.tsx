@@ -1,8 +1,9 @@
-import { Header } from '@/components/Header'
+import { Header } from '@/components/features/Header'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { AccountProvider } from '../context/AccountProvider';
+import { PageProvider } from '@/context/PageProvider';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,10 +20,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <AccountProvider>
-            <Header/>
-            {children}
-        </AccountProvider>
+        <PageProvider>
+          <AccountProvider>
+              <Header/>
+              {children}
+          </AccountProvider>
+        </PageProvider>
         </body>
     </html>
   )

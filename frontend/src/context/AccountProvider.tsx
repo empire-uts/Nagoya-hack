@@ -29,6 +29,11 @@ export const AccountProvider:FC<Props> = ({ children }) => {
       if(!ethereum){
         return;
       }
+      await ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: '0x13881' }],
+      });
+
       const accounts = await ethereum.request({method: "eth_requestAccounts"});
       if(accounts.length > 0){
         console.log('currentAccount: ', accounts[0]);
@@ -48,6 +53,11 @@ export const AccountProvider:FC<Props> = ({ children }) => {
           console.log('')
           return;
         }
+        await ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: '0x13881' }],
+        });
+        
         const accounts = await ethereum.request({method: "eth_accounts"});
         if(accounts.length > 0){
           console.log('currentAccount: ', accounts[0]);
