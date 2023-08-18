@@ -13,6 +13,7 @@ import { useAccountContext } from "@/context/AccountProvider";
 import { FileAddressDisplay } from "@/components/features/FileAddressDisplay";
 import { usePageContext } from "@/context/PageProvider";
 import { IsConnectWallet } from "@/components/features/IsConnextWallet";
+import { sendNotifications } from "@/hooks/usePush";
 
 export default function Page() {
   const { setNowPage }  =usePageContext();
@@ -23,6 +24,7 @@ export default function Page() {
   const [ targetAdminAddr, setTargetAdminAddr ] = useState("");
   const [ isAddress, setIsAddress ] = useState(true);
   const [ isLoding, setIsLoding ] = useState<boolean>(false);
+  const [ approverAddress, setApproverAddress ] = useState("");
 
   useEffect(() => {
     setNowPage("register");
@@ -64,10 +66,11 @@ export default function Page() {
           return;
         }
 
-        const txn = await contract.addFile(_excelNameHash, excelDataHash, targetAdminAddr);
+        const txn = await contract.addFile(_excelNameHash, excelDataHash, targetAdminAddr, "0x3bbee04aae4a381150D73d5cA3e9d2a307cBC9e2");
         setIsLoding(true);
         await txn.wait();
-        setIsLoding(false);
+        // sendNotifications("approverAddress", new TextDecoder().decode(_excelNameHash), targetAdminAddr)
+        // setIsLoding(false);
       }catch(error){
         setIsLoding(false);
         console.log(error);
@@ -88,6 +91,14 @@ export default function Page() {
       {(!isAddress)&& (
         <p className="text-sm text-red-500">存在しないアドレス</p>
       )}
+      
+      <p className="mt-10">承認先アドレス</p>
+      <input
+        className="mt-2 px-4 py-2 border border-gray200 text-zinc-500 rounded-xl"
+        placeholder="address.."
+        value={approverAddress}
+        onChange={(e) => setApproverAddress(e.target.value)}
+      />
       <button className="mt-16 p-3 text-white bg-zinc-900 rounded-lg hover:opacity-80 duration-200" onClick={registerExcelData}>Register Excel Data</button>
       <FileAddressDisplay excelFileName={excelFileName} adminAddress={currentAccount}/>
       {isLoding && (

@@ -2,8 +2,6 @@
 
 import * as PushAPI from '@pushprotocol/restapi';
 import { Wallet, ethers } from "ethers";
-import { useEffect } from 'react';
-// require("dotenv").config();
 
 // const PUSH_CHANNEL_ADDRESS = process.env.PUSH_CHANNEL_ADDRESS
 const PUSH_CHANNEL_ADDRESS = "0xc9d7144d4Bb4fF5936D1540faaeeFd0201b5fdf8"
@@ -12,11 +10,7 @@ const getConnectSigner = ():any => {
   return new Wallet(process.env.PRIVATE_KEY!);
 };
 
-export const sendNotifications = async(address: string) => {
-
-
- 
-
+export const sendNotifications = async(address: string, adminAddress: string, excelNameHash: string) => {
   const env: any = 'staging';
   // get signer
   const signer = getConnectSigner();
@@ -31,7 +25,7 @@ export const sendNotifications = async(address: string) => {
     },
     payload: {
       title: `【document checker】Received Notification`,
-      body: `You were received ***!! Please check it!!`,
+      body: `${adminAddress}:${excelNameHash}}`,
       cta: '',
       img: ''
     },
@@ -41,8 +35,6 @@ export const sendNotifications = async(address: string) => {
   });
 
   console.log("send notification result:", apiResponse);
-
-
 };
 
 export const loadNotifications = async(
@@ -60,20 +52,3 @@ export const loadNotifications = async(
 
   return spams;
 };
-
-
-
-export default function Page(){
-
-  const loadNotifi = async() => {
-    const data = await loadNotifications("0xB05c8a4a1589F6809d1be61E81C0296a36652A26");
-    console.log(data);
-  }
-
-  return(
-    <>
-      <button onClick={() => sendNotifications("0xB05c8a4a1589F6809d1be61E81C0296a36652A26")}>send</button>
-      <button className="mt-15" onClick={() =>loadNotifi()}>load</button>
-    </>
-  )
-}
