@@ -11,5 +11,10 @@
   },
   "dependencies": {
     "dotenv": "^16.3.1"
+  },
+  "scripts": {
+    "run:script":"npx hardhat run scripts/run.js",
+    "test": "npx hardhat test",
+    "deploy": "npx hardhat run scripts/deploy.js --network sepolia"
   }
 }
