@@ -31,6 +31,9 @@ export const Header = () => {
         <li>
           <Link href="/register" className={`hover:text-gray-800 ${nowPage==="register"? "text-blue-500": ""}` }>Register</Link>
         </li>
+        <li>
+          <Link href="/edit-permissions" className={`hover:text-gray-800 ${nowPage=="edit-permissions"? "text-blue-500": ""}`}>Edit Permissions</Link>
+        </li>
       </ul>
       {shortAddr === "" ? (
         <button className="px-3 py-2 text-xs text-white bg-blue-500 rounded-xl hover:opacity-60" onClick={connectWallet}>connect</button>

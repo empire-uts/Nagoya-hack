@@ -31,7 +31,7 @@ export const AccountProvider:FC<Props> = ({ children }) => {
       }
       await ethereum.request({
         method: 'wallet_switchEthereumChain',
-        params: [{ chainId: '0x13881' }],
+        params: [{ chainId: '0x250' }],
       });
 
       const accounts = await ethereum.request({method: "eth_requestAccounts"});
@@ -55,7 +55,7 @@ export const AccountProvider:FC<Props> = ({ children }) => {
         }
         await ethereum.request({
           method: 'wallet_switchEthereumChain',
-          params: [{ chainId: '0x13881' }],
+          params: [{ chainId: '0x250' }],
         });
         
         const accounts = await ethereum.request({method: "eth_accounts"});
