@@ -97,8 +97,10 @@ contract test {
     //オフチェーンとオンチェーンのファイル一致確認
     function verifyFileHash(address _ownerAddress, bytes32 _fileNameHash, bytes32 _inputFileContentHash) public view returns (bool) {
         
-        uint256 lastIndex = fileRegistry[_ownerAddress][_fileNameHash].length - 1;
-        return fileRegistry[_ownerAddress][_fileNameHash][lastIndex].fileContentHash == _inputFileContentHash;
+        uint256 lastIndex = fileRegistry[_ownerAddress][_fileNameHash].length;
+        require(lastIndex > 0, "does not exist");
+
+        return fileRegistry[_ownerAddress][_fileNameHash][lastIndex-1].fileContentHash == _inputFileContentHash;
     }
 
 }

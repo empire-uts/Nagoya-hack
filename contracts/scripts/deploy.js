@@ -2,7 +2,8 @@ const hre = require("hardhat");
 
 async function main() {
   const MyContract = await hre.ethers.getContractFactory("test");
-  const myContract = await MyContract.deploy(); // コントラクトをデプロイ
+  const feeData = {gasLimit: 5000000}; //await provider.getFeeData();
+  const myContract = await MyContract.deploy(feeData); // コントラクトをデプロイ
 
   await myContract.deployed();
 
